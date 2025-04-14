@@ -1,13 +1,17 @@
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufRead = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufWrite = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int N = scan.nextInt();
+        int N = Integer.parseInt(bufRead.readLine());
         for (int i = 1; i <= N; i++) {
-            System.out.println(i);
+            bufWrite.write(i + "\n");
         }
-        scan.close();
+        bufWrite.flush();
+
+        bufRead.close();
+        bufWrite.close();
     }
 }
