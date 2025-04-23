@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -6,14 +8,14 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder output = new StringBuilder();
 
-        StringTokenizer first_token = new StringTokenizer(br.readLine(), " ");
-        int N = Integer.parseInt(first_token.nextToken());
-        int X = Integer.parseInt(first_token.nextToken());
+        StringTokenizer token = new StringTokenizer(br.readLine(), " ");
+        int N = Integer.parseInt(token.nextToken());
+        int X = Integer.parseInt(token.nextToken());
 
-        StringTokenizer second_token = new StringTokenizer(br.readLine(), " ");
+        token = new StringTokenizer(br.readLine(), " ");
 
         for (int i = 0; i < N; i++) {
-            int num = Integer.parseInt(second_token.nextToken());
+            int num = Integer.parseInt(token.nextToken());
             if(X > num) {
                 output.append(num).append(" ");
             }
