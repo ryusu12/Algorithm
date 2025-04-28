@@ -4,9 +4,10 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public boolean check (int a, int b, int c) {
-        return  Math.pow(a,2) + Math.pow(b,2) == Math.pow(c,2);
+    public boolean check(int a, int b, int c) {
+        return a * a + b * b == c * c;
     }
+
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,7 +18,7 @@ public class Main {
             int b = Integer.parseInt(token.nextToken());
             int c = Integer.parseInt(token.nextToken());
 
-            if(a == 0 && b ==0 && c ==0) break;
+            if (a == 0 && b == 0 && c == 0) break;
 
             String result;
             if (main.check(a, b, c)) result = "right";
