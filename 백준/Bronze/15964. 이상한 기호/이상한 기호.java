@@ -8,8 +8,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder output = new StringBuilder();
         StringTokenizer token = new StringTokenizer(br.readLine(), " ");
-        int A = Integer.parseInt(token.nextToken());
-        int B = Integer.parseInt(token.nextToken());
+        long A = Integer.parseInt(token.nextToken());
+        long B = Integer.parseInt(token.nextToken());
 
         output.append((A + B) * (A - B));
 
