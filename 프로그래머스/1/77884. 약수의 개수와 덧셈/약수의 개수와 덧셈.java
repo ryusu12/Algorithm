@@ -1,20 +1,13 @@
 class Solution {
     public int solution(int left, int right) {
         int answer = 0;
-        int num = left;
-        while(num <= right) {
-            int count = 0;
-            for (int i = 1; i<= Math.sqrt(num); i++) {
-                if(num % i == 0) {
-                    count += (i == num / i) ? 1 : 2;
-                }
-            }
-            if(count % 2 == 0) {
-                answer += num;
+        for(int i = left; i <= right; i++) {
+            int sqrt = (int) Math.sqrt(i);
+            if(sqrt * sqrt == i) {
+                answer -= i;
             } else {
-                answer -= num;
+                answer += i;
             }
-            num++;
         }
         return answer;
     }
