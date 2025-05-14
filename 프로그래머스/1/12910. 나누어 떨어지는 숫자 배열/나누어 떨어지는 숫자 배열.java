@@ -2,11 +2,24 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        int[] answer = Arrays.stream(arr).filter(num -> (num % divisor) == 0).sorted().toArray();
-        if (answer.length == 0) {
-            int[] empty = {-1};
-            return empty;
+        int length = 0;
+        for (int num : arr) {
+            if ((num % divisor) == 0) {
+                length++;
+            }
         }
+        if(length == 0) {
+            return new int[]{-1};
+        }
+        int[] answer = new int[length];
+
+        int idx = 0;
+        for (int num : arr) {
+            if (num % divisor == 0) {
+                answer[idx++] = num;
+            }
+        }
+        Arrays.sort(answer);
         return answer;
     }
 }
