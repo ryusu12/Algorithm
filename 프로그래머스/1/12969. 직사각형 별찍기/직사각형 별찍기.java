@@ -1,20 +1,25 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 class Solution {
-    public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer token = new StringTokenizer(br.readLine(), " ");
 
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
+        StringBuilder col = new StringBuilder();
+
+        int a = Integer.parseInt(token.nextToken());
+        int b = Integer.parseInt(token.nextToken());
+        
+        char[] arr = new char[a + 1];
+        Arrays.fill(arr, 0, a, '*');
+        arr[a] = '\n';
+        String row = new String(arr);
         
         for (int i = 0; i < b; i++) {
-            for (int j = 0; j < a; j++) {
-                sb.append('*');
-            }
-            sb.append('\n');
+            col.append(row);
         }
 
-        System.out.println(sb.toString());
+        System.out.println(col.toString());
     }
 }
