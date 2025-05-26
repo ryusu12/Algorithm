@@ -3,15 +3,13 @@ class Solution {
         int answer = 0;
         StringBuilder sb = new StringBuilder();
         
-        for (int i = 0; n > 0; i++) {
+        while (n > 0) {
             sb.append(n % 3);
             n /= 3;
         }
         
-        int pow = 1;
-        for (int i = sb.length() - 1; i >= 0; i--) {
-            answer += (sb.charAt(i) -'0') * pow;
-            pow *= 3;
+        for (int i = 0; i < sb.length(); i++) {
+            answer += (sb.charAt(sb.length() - i - 1)-'0') * Math.pow(3, i);
         }
         return answer;
     }
