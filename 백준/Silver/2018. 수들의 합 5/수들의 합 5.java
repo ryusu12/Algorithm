@@ -10,13 +10,13 @@ public class Main {
         int sum = 1;
         int count = 1;
         int start = 1;
-        int end = 1;
+        int end = 2;
 
-        while (end < N) {
+        while (end <= N) {
             if (sum < N) {
-                sum += ++end;
+                sum += end++;
             } else if (sum == N) {
-                sum += ++end;
+                sum += end++;
                 count++;
             } else {
                 sum -= start++;
