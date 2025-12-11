@@ -2,17 +2,17 @@ import java.util.*;
 
 class Solution {
     public int solution(String[][] clothes) {
-        int answer = 1;
-        // 각 종류 입는 경우 구하기
+        // 종류마다 : 1, 2, 선택안함 - n+1
+        // map <종류, 수>
         Map<String, Integer> map = new HashMap<>();
-        for (String[] cloth : clothes) {
-            map.put(cloth[1], map.getOrDefault(cloth[1], 0) + 1);
+        for (int i = 0; i < clothes.length; i++) {
+            map.put(clothes[i][1], map.getOrDefault(clothes[i][1], 0) + 1);
         }
-        // 조합 : 각 종류 곱하기 - 안입는 경우 +1
+        int answer = 1;
         for (Integer value : map.values()) {
-            answer *= value + 1;
+            answer *= (value + 1);
         }
-        // 아무것도 안입는 경우 빼기 : -1
+        // 최소 한 개의 의상은 입습니다.
         return answer - 1;
     }
 }
