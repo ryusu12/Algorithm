@@ -3,13 +3,15 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = new int[commands.length];
-        for (int c = 0; c < commands.length; c++) {
-            int i = commands[c][0] - 1;
-            int j = commands[c][1];
-            int k = commands[c][2] - 1;
-            int[] arr = Arrays.copyOfRange(array, i, j);
-            Arrays.sort(arr);
-            answer[c] = arr[k];
+        for (int idx = 0; idx < commands.length; idx++) {
+            int i = commands[idx][0] - 1;
+            int j = commands[idx][1];
+            int k = commands[idx][2] - 1;
+            // array. i ~ j
+            int[] sliceArr = Arrays.copyOfRange(array, i, j);
+            // 정렬
+            Arrays.sort(sliceArr);
+            answer[idx] = sliceArr[k];
         }
         return answer;
     }
