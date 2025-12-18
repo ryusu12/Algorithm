@@ -1,11 +1,14 @@
 class Solution {
     public int solution(int[][] sizes) {
-        int higth = 0;
-        int width = 0;
+        int w = 0;
+        int h = 0;
+        // 정렬 : [큰값, 작은값]
         for (int i = 0; i < sizes.length; i++) {
-            higth = Math.max(higth, Math.max(sizes[i][0], sizes[i][1]));
-            width = Math.max(width, Math.min(sizes[i][0], sizes[i][1]));
+            int max = Math.max(sizes[i][0], sizes[i][1]);
+            int min = Math.min(sizes[i][0], sizes[i][1]);
+            w = Math.max(w, max);
+            h = Math.max(h, min);
         }
-        return higth * width;
+        return w * h;
     }
 }
