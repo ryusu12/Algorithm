@@ -1,16 +1,30 @@
+// brown = xy - yellow
+// yellow = (x-2) * (y-2)
+// brown = 2y+ 2x - 4
+
+// xy = brown + yellow
+// x+y = (brown+4)/2
+
+// x = (brown + yellow + 1) / (brown+4)/2
+// y = (brown+4)/2 - x
+
 class Solution {
     public int[] solution(int brown, int yellow) {
         int[] answer = new int[2];
-        double sum = (double) (brown + 4) / 2;
-        double sum2 = brown + yellow;
-        int x;
-        for (x = 1; x < 5000; x++) {
-            if ( sum == (x + sum2 / x)) break;
+        
+        double sum = (double)(brown+4) / 2;
+        double xy = brown + yellow;
+        
+        int y = 1;
+        for (y = 1; y < 5000; y++) {
+            if (sum == (xy / y + y)) {
+                break;
+            }
         }
+        int x = (int)sum - y;
 
-        int y = (int) (sum2 / x);
-        answer[0] = Math.max(x, y);
-        answer[1] = Math.min(x, y);
+        answer[0] = x;
+        answer[1] = y;
         return answer;
     }
 }
