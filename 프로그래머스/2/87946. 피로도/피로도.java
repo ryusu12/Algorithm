@@ -1,26 +1,24 @@
-import java.util.*;
-
 class Solution {
-    int answer = 0;
+    private int answer = 0;
 
     public int solution(int k, int[][] dungeons) {
-        // 완전 탐색 - 백트래킹
-        boolean[] visited = new boolean[dungeons.length];
-        dfs(k, dungeons, 0, visited);
+        boolean[] check = new boolean[dungeons.length];
+        intoDungeon(k, dungeons, check, 0);
         return answer;
     }
-
-    private void dfs(int k, int[][] dungeons, int cnt, boolean[] visited) {
-        // 최대 방문 던전 수
-        answer = Math.max(answer, cnt);
-
+    
+    private void intoDungeon(int now, int[][] dungeons, boolean[] check, int count) {
+        // 매번 최대값 갱신
+        answer = Math.max(answer, count);
+        
         for (int i = 0; i < dungeons.length; i++) {
-            if (!visited[i] && k >= dungeons[i][0]) {
-                visited[i] = true;
-                dfs(k - dungeons[i][1], dungeons, cnt + 1, visited);
-                visited[i] = false;
+            // 입장 가능 -> 현재 -= 피로도 / 체크 -> 다음 던전 입장 -> 체크 해제
+            if (check[i] == false && now >= dungeons[i][0]) {
+                check[i] = true;
+                intoDungeon(now - dungeons[i][1], dungeons, check, count + 1);
+                check[i] = false;
             }
+            // 입장 불가능 -> 끝
         }
     }
-
 }
