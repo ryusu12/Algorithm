@@ -2,27 +2,22 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        int[] answer = {};
         // 최대값 정렬 힙 + 최소값 정렬 힙
         Queue<Integer> maxHeap = new PriorityQueue<>((a,b) -> b.compareTo(a));
         Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> a.compareTo(b));
         
         for (String oper : operations) {
-            String[] operArr = oper.split(" ");
-            // | 가 있으면 두 큐에 모두 삽입
-            if (operArr[0].equals("I")) {
-                int num = Integer.parseInt(operArr[1]);
+            // I 가 있으면 두 큐에 모두 삽입
+            if (oper.charAt(0) == 'I') {
+                int num = Integer.parseInt(oper.substring(2));
                 maxHeap.offer(num);
                 minHeap.offer(num);
             }
             // "D 1" 이면 최대값힙 poll / "D -1" 이면 최소값힙 poll - 다른 한쪽도 삭제해서 동기화
-            else if (operArr[0].equals("D")) {
-                int num = Integer.parseInt(operArr[1]);
-                if (num < 0) {
-                    maxHeap.remove(minHeap.poll());
-                } else {
-                    minHeap.remove(maxHeap.poll());
-                }
+            else if (oper.equals("D 1")) {
+                minHeap.remove(maxHeap.poll());
+            } else if (oper.equals("D -1")) {
+                maxHeap.remove(minHeap.poll());
             }
         }
        
