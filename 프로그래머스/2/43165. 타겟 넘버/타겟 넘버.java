@@ -1,22 +1,19 @@
 class Solution {
+    
     int answer = 0;
-
+    
     public int solution(int[] numbers, int target) {
-        int sum = 0;
-        int idx = 0;
-        dfs(numbers, target, sum, idx);
-
+        dfs(0, 0, numbers, target);
         return answer;
     }
-
-    private void dfs(int[] numbers,  int target, int sum, int idx) {
+    
+    private void dfs(int now, int idx, int[] numbers, int target) {
         if (idx == numbers.length) {
-            if (sum == target) answer++;
+            if (now == target) answer++;
             return;
         }
-        int deleteSum = sum - numbers[idx];
-        dfs(numbers, target, deleteSum, idx + 1);
-        int addSum = sum + numbers[idx];
-        dfs(numbers, target, addSum, idx + 1);
+        
+        dfs(now + numbers[idx], idx + 1, numbers, target);
+        dfs(now - numbers[idx], idx + 1, numbers, target);
     }
 }
