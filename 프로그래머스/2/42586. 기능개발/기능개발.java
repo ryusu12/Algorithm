@@ -2,28 +2,31 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        // 각 작업일 배열
-        int[] last = new int[progresses.length];
+        // 각 작업일 저장
+        Queue<Integer> que = new LinkedList<>();
+        
         for (int i = 0; i < progresses.length; i++) {
+            int count = 0;
             if ((100 - progresses[i]) % speeds[i] > 0) {
-                last[i] = (100 - progresses[i]) / speeds[i] + 1;
+                count = (100 - progresses[i]) / speeds[i] + 1;
             } else {
-                last[i] = (100 - progresses[i]) / speeds[i];
+                count = (100 - progresses[i]) / speeds[i];
             }
+            que.offer(count);
         }
         
         // 이전에 나간 값이 더 크면 당일배포수++
         List<Integer> list = new ArrayList<>();
-        int before = last[0];
+        int before = que.poll();
         int out = 1;
-        for (int i = 1; i < last.length; i++) {
-            if (before >= last[i]) {
-                out++;
-            }
-            else {
+        while (!que.isEmpty()) {
+            int now = que.poll();
+            if (before < now) {
                 list.add(out);
                 out = 1;
-                before = last[i];
+                before = now;
+            } else {
+                out++;
             }
         }
         list.add(out);
