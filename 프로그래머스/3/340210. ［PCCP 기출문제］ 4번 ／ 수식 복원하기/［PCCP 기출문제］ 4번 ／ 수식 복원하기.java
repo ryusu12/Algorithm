@@ -24,11 +24,8 @@ class Solution {
             int B = Integer.parseInt(ex[2]);
             String result = ex[4];
             
-            if (result.equals("X")) {
-                ifN = Math.max(ifN, A%10 + 1);
-                ifN = Math.max(ifN, B%10 + 1);
-                continue;
-            }
+            // 결과값이 있을때만 확인
+            if (result.equals("X")) continue;
             
             int C = Integer.parseInt(result);
             
@@ -36,19 +33,17 @@ class Solution {
                 if (A%10 < B%10) {
                     N = C%10 + B%10 - A%10;
                     break;
-                } else {
-                    ifN = Math.max(ifN, A%10 + 1);
                 }
             }
             // 만약에 부호가 덧셈
             else {
                 if (A + B == C) {
-                    ifN = Math.max(ifN, A%10 + B%10 + 1);
+                    ifN = Math.max(ifN, C%10 + 1);
                 }
                 else {
                     for (int i = 0; i < 2; i++) {
                         if (A%10 + B%10 == C%10) {
-                            ifN = Math.max(ifN, A%10 + B%10 + 1);
+                            ifN = Math.max(ifN, C%10 + 1);
                         }
                         // 진법 확정 == 답%10 + 첫%10 + 둘%10
                         else {
