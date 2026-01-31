@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int N = Integer.parseInt(br.readLine());
+
+		// 각 숫자판의 최대값 int[] max
+		int[] max = new int[N];
+		StringTokenizer token = new StringTokenizer(br.readLine(), " ");
+		for (int i = 0; i < N; i++) {
+			max[i] = Integer.parseInt(token.nextToken());
+		}
+
+		// 각 숫자판의 초기값 int[] now
+		int[] now = new int[N];
+		token = new StringTokenizer(br.readLine(), " ");
+		for (int i = 0; i < N; i++) {
+			now[i] = Integer.parseInt(token.nextToken());
+		}
+		
+		int K = Integer.parseInt(br.readLine());
+
+
+		// 버튼누르는 동안 재귀하면서 증가,검사 진행
+		for (int i = 0; i < K; i++) {
+			m.add(N - 1, max, now);
+		}
+
+
+		// 결과 출력
+		for (int n : now) {
+			System.out.print(n);
+		}
+	}
+
+	private void add(int i, int[] max, int[] now) {
+		now[i]++;
+
+		if (now[i] > max[i]) {
+			now[i] = 0;
+			// 가장 왼쪽 숫자가 아닐때만 전파
+			if (i != 0) {
+				add(i-1, max, now);
+			}
+		}
+	}
+}
