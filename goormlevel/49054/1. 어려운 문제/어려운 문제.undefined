@@ -6,27 +6,31 @@ class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 
-		m.function(1, 2, N);
+		m.function(N);
 	}
 
-	private void function(int now, int next, int N) {
-		// 다 돌면 출력하고 리턴
-		if (next > N) {
-			System.out.println(now);
+	private void function(int N) {
+		// 0 인경우
+		if (N == 0) {
+			System.out.println(1);
 			return;
 		}
 
-		int result = now * next;
-		
-		// 두자리수를 넘으면 ? 각 자리수 더하기
-		while (result > 9) {
-			int sum = 0;
-			for (; result > 0; result /= 10) {
-				sum += result % 10;
+		// 팩토리얼
+		int now = 1;
+		for (int next = 2; next <= N; next++) {
+			now *= next;
+			
+			// 두자리수를 넘으면 ? 각 자리수 더하기
+			while (now > 9) {
+				int sum = 0;
+				for (; now > 0; now /= 10) {
+					sum += now % 10;
+				}
+				now = sum;
 			}
-			result = sum;
 		}
 
-		function(result, next + 1, N);
+		System.out.println(now);
 	}
 }
