@@ -1,0 +1,18 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		int N = Integer.parseInt(input[0]);
+		int M = Integer.parseInt(input[1]);
+		function(N, M);
+	}
+	
+	private static void function(int N, int M) {
+		// 소금(농도 (0.07) * 소금물) / 물의양(N+M)
+		double result = ((0.07 * N) / (N + M)) * 100;
+		result = Math.floor(result * 100) / 100.0;
+		String answer = String.format("%.2f",result);
+		System.out.println(answer);
+	}
+}
