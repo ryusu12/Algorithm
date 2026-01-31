@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int N = Integer.parseInt(br.readLine());
+
+		// 단풍나무 현황
+		int[][] s = new int[N][N];
+		// 사전에 0 이상인거 좌표 큐에 저장
+		Queue<int[]> q = new LinkedList<>();
+		
+		for (int i = 0; i < N; i++) {
+			StringTokenizer token = new StringTokenizer(br.readLine(), " ");
+			for (int j = 0; j < N; j++) {
+				s[i][j] = Integer.parseInt(token.nextToken());
+				if (s[i][j] != 0) {
+					q.offer(new int[]{i, j});
+				}
+			}
+		}
+
+		m.funtion(s, q, N);
+	}
+
+	private void funtion(int[][] s, Queue<int[]> q, int N) {
+		int time = 0;
+
+		int[] dx = {1, -1, 0, 0};
+		int[] dy = {0, 0, 1, -1};
+		
+		// 0이 됐다면 빼기
+		while (!q.isEmpty()) {
+			// 미리 상하좌우 0의 수 구하기
+			int[][] count = new int[N][N];
+
+			int size = q.size();
+			for (int i = 0; i < size; i++) {
+				int[] xy = q.poll();
+				int x = xy[0];
+				int y = xy[1];
+				
+				for (int j = 0; j < 4; j++) {
+					int nx = x + dx[j];
+					int ny = y + dy[j];
+					boolean inRange = nx >= 0 && ny >= 0 && nx < N && ny < N;
+					if (inRange && s[nx][ny] == 0) count[x][y]++;
+				}
+				q.offer(xy);
+			}
+
+			// 변화 적용
+			for (int i = 0; i < size; i++) {
+				int[] xy = q.poll();
+				int x = xy[0];
+				int y = xy[1];
+				
+				// 지금 구역의수 - 상하좌우 0의 수 (최소 0)
+				s[x][y] = Math.max(0, s[x][y] - count[x][y]);
+				// 아직 안물들었으면 큐에 다시 넣기
+				if (s[x][y] > 0) q.offer(xy);
+			}
+
+			time++;
+		}
+
+		System.out.println(time);
+	}
+}
