@@ -1,0 +1,32 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+
+		m.function(1, 2, N);
+	}
+
+	private void function(int now, int next, int N) {
+		// 다 돌면 출력하고 리턴
+		if (next > N) {
+			System.out.println(now);
+			return;
+		}
+
+		int result = now * next;
+		
+		// 두자리수를 넘으면 ? 각 자리수 더하기
+		while (result > 9) {
+			int sum = 0;
+			for (; result > 0; result /= 10) {
+				sum += result % 10;
+			}
+			result = sum;
+		}
+
+		function(result, next + 1, N);
+	}
+}
