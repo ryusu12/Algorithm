@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		
+		int N = Integer.parseInt(input[0]);
+		int M = Integer.parseInt(input[1]);
+
+		// 마을의 땅높이 int[] k
+		int[] k = new int[N + 1];
+		int idx = 1;
+		for (String s : br.readLine().split(" ")) {
+			int i = Integer.parseInt(s);
+			k[idx++] = i;
+		}
+
+		// 장마가 내린거 int[][] rain
+		int[][] rain = new int[M+1][2];
+		idx = 1;
+		for (int i = 0; i < M; i++) {
+			String[] day = br.readLine().split(" ");
+			int s = Integer.parseInt(day[0]);
+			int e = Integer.parseInt(day[1]);
+			rain[idx++] = new int[] {s, e};
+		}
+		
+		// 시간흐르면서 높이 측정
+		m.function(k, rain);
+
+		// 최종 높이 출력
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i < k.length; i++) {
+			sb.append(k[i]).append(" ");
+		}
+		System.out.println(sb);
+	}
+
+	private void function(int[] k, int[][] rain) {
+		for (int i = 1; i < rain.length; i++) {
+			// 비내리는거 추가
+			for (int j = rain[i][0]; j <= rain[i][1]; j++) {
+				k[j]++;
+			}
+			// 배수 시스템 : 3일전에 내린것들 한번만 --;
+			if (i % 3 == 0) {
+				// 3일전에 내린것들 구하기
+				Set<Integer> set = new HashSet<>();
+				for (int j = rain[i][0]; j <= rain[i][1]; j++) set.add(j);
+				for (int j = rain[i-1][0]; j <= rain[i-1][1]; j++) set.add(j);
+				for (int j = rain[i-2][0]; j <= rain[i-2][1]; j++) set.add(j);
+
+				for (int s : set) {
+					k[s]--;
+				}
+			}
+		}
+	}
+}
