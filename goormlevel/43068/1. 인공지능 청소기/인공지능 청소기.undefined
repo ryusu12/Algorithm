@@ -1,0 +1,31 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+
+		for (int i = 0; i < T; i++) {
+			String[] s = br.readLine().split(" ");
+			int x = Integer.parseInt(s[0]);
+			int y = Integer.parseInt(s[1]);
+			int n = Integer.parseInt(s[2]);
+			function(x, y, n);
+		}
+	}
+	
+	private static void function(int x, int y, int n) {
+		int nx = 0;
+		int ny = 0;
+
+		// 거리 차이 합
+		int sum = Math.abs(x - nx) + Math.abs(y - ny);
+
+		String answer = "NO";
+		// 같은 곳 갈 수 있으니까 +2 / 그 값이 소요시간 n 이랑 같으면 YES
+		while (sum <= n) {
+			if (sum == n) answer = "YES";
+			sum += 2;
+		}
+		System.out.println(answer);
+	}
+}
