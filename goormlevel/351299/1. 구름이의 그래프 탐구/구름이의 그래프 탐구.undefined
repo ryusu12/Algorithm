@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+	int count = 0;
+	
+	public static void main(String[] args) throws Exception {
+		Main m = new Main();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer token;
+		int M = Integer.parseInt(br.readLine());
+
+		// 한 사람을 기준으로 지인 모음 구하기
+		Map<Integer, List<Integer>> map = new HashMap<>();
+		int lastPerson = 0;
+		for (int i = 0; i < M; i++) {
+			token = new StringTokenizer(br.readLine(), " ");
+			int u = Integer.parseInt(token.nextToken());
+			int v = Integer.parseInt(token.nextToken());
+			// 양방향으로 저장
+			List<Integer> listU = map.getOrDefault(u, new ArrayList<>());
+			listU.add(v);
+			List<Integer> listV = map.getOrDefault(v, new ArrayList<>());
+			listV.add(u);
+			map.put(u, listU);
+			map.put(v, listV);
+			lastPerson = Math.max(lastPerson, Math.max(u, v));
+		}
+
+		// 그룹 수 확인하기
+		boolean[] visited = new boolean[lastPerson + 1];
+		visited[0] = true;
+		int max = 0;
+		int min = Integer.MAX_VALUE;
+	
+		for (int i = 1; i <= lastPerson; i++) {
+			if (map.containsKey(i) && !visited[i]) {
+				m.count = 0;
+				m.function(i, map, visited);
+				// 다 돌면 인원수 반환 : 최대값/최소값 갱신
+				if (m.count >= 2 && m.count > max) max = m.count;
+				if (m.count >= 2 && m.count < min) min = m.count;
+			}
+		}
+
+		if (max == 0) System.out.println("0 0");
+		else System.out.println(min + " " + max);
+	}
+
+	private void function(int now, Map<Integer, List<Integer>> map, boolean[] visited) {
+		visited[now] = true;
+		count++;
+		
+		// 연결된것 중의 연결된 것 확인
+		for (int c : map.get(now)) {
+			if (!visited[c]) {
+				function(c, map, visited);
+			}
+		}
+	}
+}
