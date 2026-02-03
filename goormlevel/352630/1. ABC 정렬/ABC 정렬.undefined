@@ -2,11 +2,12 @@ import java.io.*;
 import java.util.*;
 
 class Main {
-	static int aInB = 0, aInC = 0;
-	static int bInA = 0, bInC = 0; 
-	static int cInA = 0, cInB = 0;
+	int aInB = 0, aInC = 0;
+	int bInA = 0, bInC = 0; 
+	int cInA = 0, cInB = 0;
 	
 	public static void main(String[] args) throws Exception {
+		Main m = new Main();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		// 입력값 구하기
@@ -14,61 +15,15 @@ class Main {
 
 		// 문자열 -> 배열로 저장
 		char[] arr = br.readLine().toCharArray();
-		int[] count = getCounts(arr);
-		getMismatch(arr, count);
+		int[] count = m.getCounts(arr);
+		m.getMismatch(arr, count);
 		
 		// 교체 진행
-		function();
+		m.function();
 	}
 
 	// 종류별로 몇개 있는지 확인
-	private static int[] getCounts(char[] arr) {
+	private int[] getCounts(char[] arr) {
 		// A:0, B:1, C:2
 		int[] count = new int[3];
 		for (char c : arr) {
-				count[c - 'A']++;
-		}
-		return count;
-	}
-	
-	// 잘못 위치해있는거 미리 구하기 : A 자리에 있는 B, C / B 자리에 있는 A, C / C 자리에 있는 A, B
-	private static void getMismatch(char[] arr, int[] count) {
-		for (int i = 0; i < arr.length; i++) {
-			// A
-			if (i < count[0]) {
-				if (arr[i] == 'B') aInB++;
-				else if (arr[i] == 'C') aInC++;
-			} // B
-			else if (i < count[0] + count[1]) {
-				if (arr[i] == 'A') bInA++;
-				else if (arr[i] == 'C') bInC++;
-			} // C
-			else {
-				if (arr[i] == 'A') cInA++;
-				else if (arr[i] == 'B') cInB++;
-			}
-		}
-	}
-	
-	private static void function() {
-		int answer = 0;
-
-		// 서로 대응 A의 B와 B의 A: 1번 교체
-		int swapAB = Math.min(aInB, bInA);
-		aInB -= swapAB;
-		bInA -= swapAB;
-
-		int swapAC = Math.min(aInC, cInA);
-		aInC -= swapAC;
-		cInA -= swapAC;
-
-		int swapBC = Math.min(bInC, cInB);
-		bInC -= swapBC;
-		cInB -= swapBC;
-
-		// A의 B, B의 C, C의 A 가 남을경우 : 2번 교체 필요
-		answer = swapAB + swapAC + swapBC + (aInB + aInC) * 2;
-
-		System.out.println(answer);
-	}	
-}
