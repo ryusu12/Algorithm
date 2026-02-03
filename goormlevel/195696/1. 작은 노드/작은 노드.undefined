@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	static int count;
+	static int last;
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer token;
+		
+		token = new StringTokenizer(br.readLine(), " ");
+		int N = Integer.parseInt(token.nextToken()); // 노드 개수
+		int M = Integer.parseInt(token.nextToken()); // 간선 개수
+		int K = Integer.parseInt(token.nextToken()); // 시작노드
+
+		// 노드 정보 저장 {기준노드, 연결된 노드들}
+		Map<Integer, List<Integer>> node = new HashMap<>();
+		for (int i = 0; i < M; i++) {
+			token = new StringTokenizer(br.readLine(), " ");
+			int start = Integer.parseInt(token.nextToken());
+			int end = Integer.parseInt(token.nextToken());
+			
+			List node1 = node.getOrDefault(start, new ArrayList<>());
+			List node2 = node.getOrDefault(end, new ArrayList<>());
+			node1.add(end);
+			node2.add(start);
+			
+			node.put(start, node1);
+			node.put(end, node2);
+		}
+
+		// 작은 노드 찾기위해 사전에 정렬
+		for (List<Integer> n : node.values()) Collections.sort(n);
+		
+		boolean[] visited = new boolean[N + 1]; // 노드 방문 표시
+
+		// 탐색 dfs
+		dfs(K, node, visited);
+		
+		System.out.println(count + " " + last);
+	}
+
+	private static void dfs(int start, Map<Integer, List<Integer>> node, boolean[] visited) {
+		visited[start] = true;
+		count++;
+		last = start;
+
+		// 갈 수 있는 노드 중, 무조건 가장 작은 노드만 선택해서 이동
+		if (node.containsKey(start)) {
+			List<Integer> next = node.get(start);
+			for (int i = 0; i < next.size(); i++) {
+				if (!visited[next.get(i)]) {
+					dfs(next.get(i), node, visited);
+					break;
+				}
+			}
+		}
+	}
+}
