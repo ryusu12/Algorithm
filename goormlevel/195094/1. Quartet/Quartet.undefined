@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+
+		// 한 사람을 기준으로 연결된 정보 저장 1, {대상, 조화도}
+		List<long[]>[] link = new ArrayList[N + 1];
+		for (int i = 1; i <= N; i++) {
+			link[i] = new ArrayList<>(); 
+		}
+
+		// [대상1, 대상2, 조화도] 저장
+		long[][] synergy = new long[M][3];
+
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int u = Integer.parseInt(st.nextToken());
+			int v = Integer.parseInt(st.nextToken());
+			long w = Long.parseLong(st.nextToken());
+			// 양방향 저장
+			link[u].add(new long[]{v, w});
+			link[v].add(new long[]{u, w});
+
+			synergy[i] = new long[] {u, v, w};
+		}
+
+		// 조화도 큰 순서로 정렬 후 최대 3개만 추리기
+		for (int i = 1; i <= N; i++) {
+		    link[i].sort((a, b) -> Long.compare(b[1], a[1]));
+		    
+		    if (link[i].size() > 3) {
+		        link[i] = new ArrayList<>(link[i].subList(0, 3));
+		    }
+		}
+
+		long answer = 0;
+
+		// 4명씩 시너지 1234 : 중간을 기준으로 양옆의 최대 시너지 찾기
+		for (int i = 0; i < synergy.length; i++) {
+			int u = (int) synergy[i][0];
+			int v = (int) synergy[i][1];
+
+			// M == 1 일때
+			answer = Math.max(answer, synergy[i][2]);
+			
+			for (long[] nextU : link[u]) {
+				if (nextU[0] == v) continue; //중간 제외
+				// 3명씩 시너지 123 4 : 4명 찾는 와중에 한쪽이 없으면 3임
+				answer = Math.max(answer, synergy[i][2] + nextU[1]);
+				
+				for (long[] nextV : link[v]) {
+					// 중간 제외, 같은 대상이면 안됨
+					if (nextV[0] == u || nextV[0] == nextU[0]) continue;
+					answer = Math.max(answer, synergy[i][2] + nextU[1] + nextV[1]);
+				}
+			}
+		}
+
+
+		// 2명씩 시너지 12 34 : 가장 큰 시너지 둘을 합침 / 이때 3명이면 아무거나 한명 선택 : 3명씩 시너지인 경우
+		if (M > 1) {
+			Arrays.sort(synergy, (a, b) -> Long.compare(b[2], a[2]));
+			answer = Math.max(answer, synergy[0][2] + synergy[1][2]);
+		}
+		
+		System.out.println(answer);
+	}
+}
