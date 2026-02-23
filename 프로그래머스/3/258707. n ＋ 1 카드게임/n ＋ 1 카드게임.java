@@ -1,3 +1,9 @@
+/*
+바로 코인을 내고 가져오거나 버린다 == 버리지 않고 나중에 코인을 내서 가져온다
+
+HashSet - 탐색 o(1), 삭제 o(1), 문제에서 중복없음
+*/
+
 import java.util.*;
 
 class Solution {
