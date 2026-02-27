@@ -6,11 +6,11 @@ class Solution {
 
         if (tops[0] == 1) {
             left[0] = 3; // 삼각형 + 마름모2
-            rigth[0] = 1; // 오른쪽 마름모
         } else {
             left[0] = 2; // 삼각형 + 마름모
-            rigth[0] = 1; // 오른쪽 마름모
         }
+        rigth[0] = 1; // 오른쪽 마름모
+        
 
         for (int i = 1; i < n; i++) {
             if (tops[i] == 1) {
