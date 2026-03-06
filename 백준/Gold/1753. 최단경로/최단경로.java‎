@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+
+        int start = Integer.parseInt(br.readLine());
+
+        // start에서 각 정점으로 갈 수 있는 최단거리
+        int[] arr = new int[V + 1];
+        Arrays.fill(arr, Integer.MAX_VALUE);
+        arr[start] = 0;
+
+        // 간선 정보 저장 : Map<u, int[v, w] :w 정렬
+        Map<Integer, List<int[]>> edge = new HashMap<>();
+        for (int i = 0; i < E; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+
+            List<int[]> list = edge.getOrDefault(u, new ArrayList<>());
+            list.add(new int[]{v, w});
+            edge.put(u, list);
+        }
+
+        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        q.add(new int[] {start, 0});
+
+        while(!q.isEmpty()) {
+            int[] n = q.poll();
+            int v = n[0];
+            int w = n[1];
+
+            if (arr[v] < w) continue;
+
+            if (edge.containsKey(v)) {
+                for (int[] next : edge.get(v)) {
+                    int nv = next[0];
+                    int nw = next[1];
+
+                    if (arr[nv] > w + nw) {
+                        arr[nv] = w + nw;
+                        q.offer(new int[]{nv, arr[nv]});
+                    }
+                }
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= V; i++) {
+            if (arr[i] == Integer.MAX_VALUE) sb.append("INF\n");
+            else sb.append(arr[i]).append("\n");
+        }
+        System.out.print(sb);
+    }
+}
