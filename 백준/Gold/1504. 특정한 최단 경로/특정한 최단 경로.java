@@ -40,7 +40,7 @@ public class Main {
         int[] arrV2 = dk(v2);
 
         long result = Math.min((long) arr1[v1] + arrV1[v2]  + arrV2[n], (long) arr1[v2] + arrV2[v1]  + arrV1[n]);
-        if (result == Integer.MAX_VALUE) System.out.println(-1);
+        if (result >= Integer.MAX_VALUE) System.out.println(-1);
         else System.out.print(result);
     }
 
