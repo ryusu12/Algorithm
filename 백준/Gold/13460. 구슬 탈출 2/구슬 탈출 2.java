@@ -29,15 +29,16 @@ public class Main {
                 if (map[i][j] == 'R') {
                     ry = i;
                     rx = j;
+                    map[i][j] = '.';
                 } else if (map[i][j] == 'B') {
                     by = i;
                     bx = j;
+                    map[i][j] = '.';
                 }
             }
         }
 
-        // 파란구슬 -> 구멍 x, 빨간구슬 -> 구멍
-        System.out.print(bfs(ry, rx, by, bx));
+        System.out.println(bfs(ry, rx, by, bx));
     }
 
     private static int bfs(int sry, int srx, int sby, int sbx) {
@@ -50,7 +51,7 @@ public class Main {
         while (!q.isEmpty()) {
             int[] now = q.poll();
             int count = now[4];
-            
+
             if (count >= 10) return -1;
 
             // 두 공 동시 이동
@@ -91,7 +92,7 @@ public class Main {
                         nbx -= dx[i];
                     }
                 }
-                
+
                 if (!visited[nry][nrx][nby][nbx]) {
                     visited[nry][nrx][nby][nbx] = true;
                     q.offer(new int[] {nry, nrx, nby, nbx, count + 1});
