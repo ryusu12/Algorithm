@@ -50,7 +50,7 @@ public class Main {
         while (!q.isEmpty()) {
             int[] now = q.poll();
             int count = now[4];
-
+            
             if (count >= 10) return -1;
 
             // 두 공 동시 이동
@@ -79,8 +79,8 @@ public class Main {
 
                 // 공이 같은 위치 : 먼저오면 선점 - 짧게 온게 선점
                 if (nry == nby && nrx == nbx) {
-                    int rDist = Math.abs(nry - now[0]);
-                    int bDist = Math.abs(nby - now[2]);
+                    int rDist = Math.abs(nry - now[0]) + Math.abs(nrx - now[1]);
+                    int bDist = Math.abs(nby - now[2]) + Math.abs(nbx - now[3]);
 
                     if (rDist > bDist) {
                         nry -= dy[i];
@@ -91,7 +91,7 @@ public class Main {
                         nbx -= dx[i];
                     }
                 }
-
+                
                 if (!visited[nry][nrx][nby][nbx]) {
                     visited[nry][nrx][nby][nbx] = true;
                     q.offer(new int[] {nry, nrx, nby, nbx, count + 1});
