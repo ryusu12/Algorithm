@@ -11,7 +11,6 @@ public class Main {
 
     static int[] ddx = {-1, -1, 0, 0, -2, 0, 0, 1, 1, -1};
     static int[] ddy = {-1, 1, -2, 2, 0, -1, 1, -1, 1, 0};
-
     static int[] percent = {10, 10, 2, 2, 5, 7, 7, 1, 1};
 
     public static void main(String[] args) throws Exception {
@@ -73,7 +72,7 @@ public class Main {
 
         int a = map[y][x] - sum;
         if (ax >= 0 && ax < n && ay >= 0 && ay < n) {
-            map[ax][ay] += a;
+            map[ay][ax] += a;
         } else {
             out += a;
         }
