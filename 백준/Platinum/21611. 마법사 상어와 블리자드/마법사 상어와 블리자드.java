@@ -165,11 +165,13 @@ public class Main {
         // 나선 모양 따라서 이동
         int move = 0;
         int len = 1;
+        int nx = sx;
+        int ny = sx;
         while (true) {
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < len; j++) {
-                    int nx = sx + dx[move];
-                    int ny = sy + dy[move];
+                    nx += dx[move];
+                    ny += dy[move];
 
                     if (!inMap(ny, nx)) return;
                     listYX.add(new int[]{ny, nx}); // 벽따라 한줄로 좌표 저장
